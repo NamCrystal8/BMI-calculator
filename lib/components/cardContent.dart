@@ -1,5 +1,7 @@
-import 'package:bmi_calculator/constaints.dart';
+
 import 'package:flutter/material.dart';
+
+import 'constaints.dart';
 
 class CardContent extends StatelessWidget {
   late IconData icon;

@@ -1,11 +1,13 @@
-import 'package:bmi_calculator/results_page.dart';
-import 'package:bmi_calculator/reuseable_card.dart';
-import 'package:bmi_calculator/round_icon_button.dart';
+
+import 'package:bmi_calculator/calculating/calculator_brain.dart';
+import 'package:bmi_calculator/components/reuseable_card.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'cardContent.dart';
-import 'constaints.dart';
+import '../components/cardContent.dart';
+import '../components/constaints.dart';
 
 enum PressedButton {
   maleButton,
@@ -71,11 +73,11 @@ class _InputPageState extends State<InputPage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Height",
                           style: labelTextStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -87,7 +89,7 @@ class _InputPageState extends State<InputPage> {
                               height.toString(),
                               style: heightNumberTextStyle,
                             ),
-                            Text(
+                            const Text(
                               "cm",
                               style: labelTextStyle,
                             ),
@@ -96,11 +98,11 @@ class _InputPageState extends State<InputPage> {
                         SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             thumbColor: buttonColor,
-                            overlayColor: Color(0x29eb1555),
+                            overlayColor: const Color(0x29eb1555),
                             thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 14),
+                                const RoundSliderThumbShape(enabledThumbRadius: 14),
                             overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 25),
+                                const RoundSliderOverlayShape(overlayRadius: 25),
                             activeTrackColor: Colors.white,
                             inactiveTrackColor: Colors.grey[850],
                           ),
@@ -127,7 +129,7 @@ class _InputPageState extends State<InputPage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "WEIGHT",
                               style: labelTextStyle,
                             ),
@@ -144,7 +146,7 @@ class _InputPageState extends State<InputPage> {
                                   },
                                   icon: Icons.remove,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 RoundIconButton(
@@ -167,7 +169,7 @@ class _InputPageState extends State<InputPage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "AGE",
                               style: labelTextStyle,
                             ),
@@ -183,7 +185,7 @@ class _InputPageState extends State<InputPage> {
                                   },
                                   icon: Icons.remove,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 RoundIconButton(
@@ -204,14 +206,20 @@ class _InputPageState extends State<InputPage> {
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage()));
+                CalculatorBrain calc = CalculatorBrain(height: height, weight: weight);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage(
+                  bmiResult: calc.calculatedBMI(),
+                  resultText: calc.getResult(),
+                  feedBack:calc.getFeedback(),
+                )));
               },
               child: Container(
                 color: buttonColor,
                 margin: const EdgeInsets.only(top: 10),
                 width: double.infinity,
                 height: bottomContainerHeight,
-                child: Center(child: const Text("CALCULATE", style: labelTextStyle,)),
+                padding: const EdgeInsets.only(bottom: 10),
+                child: const Center(child: Text("CALCULATE", style: labelTextStyle,)),
               ),
             )
           ],
